@@ -1,7 +1,4 @@
-<html>
-    <body>
-
-    <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db = mysqli_connect('localhost', 'user', null, 'app');
     $result = mysqli_query($db, "SELECT * FROM users WHERE username='{$_POST['username']}';");
     $user = $result->fetch_assoc();
@@ -14,21 +11,7 @@
 
     mail($user['email'], 'Password Reset', $body);
 
-    ?>
-        <p>Password reset email has been sent.</p>
-    <?php } else {
-    if ($_GET['staff']) {?>
-            <p>Enter the username whose password to reset.</p>
-        <?php } else {?>
-            <p>Please complete the form to reset your password.</p>
-        <?php }?>
-
-        <form method="post">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-            <button>Submit</button>
-        </form>
-        <?php }?>
-
-    </body>
-</html>
+    include __DIR__ . '/src/sent.php';
+} else {
+    include __DIR__ . '/src/form.php';
+}
