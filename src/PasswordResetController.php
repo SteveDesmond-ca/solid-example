@@ -1,6 +1,8 @@
 <?php
 
-class PasswordResetController
+require_once __DIR__ . '/Controller.php';
+
+class PasswordResetController extends Controller
 {
     public function get()
     {
@@ -25,24 +27,5 @@ class PasswordResetController
 
         mail($user['email'], 'Password Reset', $body);
         return $this->view('sent.php');
-    }
-
-    public function handleRequest()
-    {
-        switch ($_SERVER['REQUEST_METHOD']) {
-            case 'POST':
-                return $this->post();
-            case 'GET':
-            default:
-                return $this->get();
-        }
-    }
-
-    private function view($template, $view_model = [])
-    {
-        ob_start();
-        include $template;
-        $output = ob_get_clean();
-        return $output;
     }
 }
