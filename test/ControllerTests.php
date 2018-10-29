@@ -10,11 +10,10 @@ class ControllerTests extends TestCase
     {
         //arrange
         $controller = new Controller();
-        $_SERVER['REQUEST_METHOD'] = 'GET';
         $_GET['staff'] = null;
 
         //act
-        $output = $controller->index();
+        $output = $controller->get();
 
         //assert
         $this->assertContains('reset your password', $output);
