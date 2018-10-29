@@ -1,6 +1,6 @@
 <?php
 
-class Controller
+class PasswordResetController
 {
     public function get()
     {

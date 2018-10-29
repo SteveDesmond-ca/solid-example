@@ -2,14 +2,14 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../src/Controller.php';
+require_once __DIR__ . '/../src/PasswordResetController.php';
 
-class ControllerTests extends TestCase
+class PasswordResetControllerTests extends TestCase
 {
     public function testCanGetForm()
     {
         //arrange
-        $controller = new Controller();
+        $controller = new PasswordResetController();
         $_GET['staff'] = null;
 
         //act
