@@ -14,9 +14,7 @@ class ControllerTests extends TestCase
         $_GET['staff'] = null;
 
         //act
-        ob_start();
-        $controller->index();
-        $output = ob_get_clean();
+        $output = $controller->index();
 
         //assert
         $this->assertContains('reset your password', $output);

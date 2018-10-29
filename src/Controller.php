@@ -16,9 +16,17 @@ class Controller
             }
 
             mail($user['email'], 'Password Reset', $body);
-            include 'sent.php';
+            return $this->view('sent.php');
         } else {
-            include 'form.php';
+            return $this->view('form.php');
         }
+    }
+
+    private function view($template)
+    {
+        ob_start();
+        include $template;
+        $output = ob_get_clean();
+        return $output;
     }
 }
