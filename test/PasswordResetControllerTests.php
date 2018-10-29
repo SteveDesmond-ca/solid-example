@@ -6,7 +6,20 @@ require_once __DIR__ . '/../src/PasswordResetController.php';
 
 class PasswordResetControllerTests extends TestCase
 {
-    public function testCanGetForm()
+    public function testFormContainsStaffMessage()
+    {
+        //arrange
+        $controller = new PasswordResetController();
+        $_GET['staff'] = 1;
+
+        //act
+        $output = $controller->get();
+
+        //assert
+        $this->assertContains('Enter the username', $output);
+    }
+
+    public function testFormContainsNonStaffMessage()
     {
         //arrange
         $controller = new PasswordResetController();

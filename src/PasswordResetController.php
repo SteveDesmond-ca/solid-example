@@ -4,7 +4,11 @@ class PasswordResetController
 {
     public function get()
     {
-        return $this->view('form.php');
+        $view_model['message'] = $_GET['staff']
+        ? 'Enter the username whose password to reset.'
+        : 'Please complete the form to reset your password.';
+
+        return $this->view('form.php', $view_model);
     }
 
     public function post()
@@ -34,7 +38,7 @@ class PasswordResetController
         }
     }
 
-    private function view($template)
+    private function view($template, $view_model = [])
     {
         ob_start();
         include $template;
