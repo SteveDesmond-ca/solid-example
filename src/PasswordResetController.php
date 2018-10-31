@@ -12,10 +12,14 @@ class PasswordResetController extends Controller
     /** @var TokenRepository */
     private $token_repository;
 
-    public function __construct($user_repository, $token_repository)
+    /** @var PasswordResetEmailSender */
+    private $email_sender;
+
+    public function __construct($user_repository, $token_repository, $email_sender)
     {
         $this->user_repository = $user_repository;
         $this->token_repository = $token_repository;
+        $this->email_sender = $email_sender;
     }
 
     public function get()
@@ -31,12 +35,7 @@ class PasswordResetController extends Controller
     {
         $user = $this->user_repository->getUser($_POST['username']);
         $token = $this->token_repository->createToken($user['username']);
-        $body = 'Please <a href="/reset_password.php?token=' . $token . '">click here</a> to reset your password.';
-        if ($_GET['staff']) {
-            $body = "A password reset was requested on your behalf. $body";
-        }
-
-        mail($user['email'], 'Password Reset', $body);
+        $this->email_sender->sendMessage($user['email'], $token);
         return $this->view('sent.php');
     }
 }
