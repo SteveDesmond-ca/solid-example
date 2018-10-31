@@ -1,7 +1,10 @@
 <?php
 
+use Aura\Sql\ExtendedPdoInterface;
+
 class TokenRepository
 {
+    /** @var ExtendedPdoInterface */
     private $db;
 
     public function __construct($db)
@@ -12,7 +15,7 @@ class TokenRepository
     public function createToken($username)
     {
         $token = md5(rand());
-        mysqli_query($this->db, "INSERT INTO password_reset_tokens (username, token, created) VALUES ('$username', '$token' NOW());");
+        $this->db->exec("INSERT INTO password_reset_tokens (username, token, created) VALUES ('$username', '$token', NOW());");
         return $token;
     }
 }

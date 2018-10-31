@@ -1,7 +1,10 @@
 <?php
 
+use Aura\Sql\ExtendedPdoInterface;
+
 class UserRepository
 {
+    /** @var ExtendedPdoInterface */
     private $db;
 
     public function __construct($db)
@@ -11,7 +14,6 @@ class UserRepository
 
     public function getUser($username)
     {
-        $result = mysqli_query($this->db, "SELECT * FROM users WHERE username='$username'");
-        return $result->fetch_assoc();
+        return $this->db->fetchAssoc("SELECT * FROM users WHERE username='$username'");
     }
 }

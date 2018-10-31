@@ -1,5 +1,7 @@
 <?php
 
+use Aura\Sql\ExtendedPdo;
+
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/TokenRepository.php';
 require_once __DIR__ . '/UserRepository.php';
@@ -17,7 +19,7 @@ class PasswordResetController extends Controller
 
     public function post()
     {
-        $db = mysqli_connect('localhost', 'user', null, 'app');
+        $db = new ExtendedPdo('mysql:server=localhost;dbname=app', 'user', null);
         $user_repo = new UserRepository($db);
         $user = $user_repo->getUser($_POST['username']);
         $token_repo = new TokenRepository($db);
