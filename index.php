@@ -10,7 +10,7 @@ require_once __DIR__ . '/src/UserRepository.php';
 $db = new ExtendedPdo('mysql:server=localhost;dbname=app', 'user');
 $user_repo = new UserRepository($db);
 $token_repo = new TokenRepository($db);
-$email_sender = new PasswordResetEmailSender();
+$email_sender = new PasswordResetEmailSender(new Swift_Mailer(new Swift_SmtpTransport()));
 
 $controller = new PasswordResetController($user_repo, $token_repo, $email_sender);
 $output = $controller->handleRequest();
