@@ -1,13 +1,23 @@
 <?php
 
-use Aura\Sql\ExtendedPdo;
-
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/TokenRepository.php';
 require_once __DIR__ . '/UserRepository.php';
 
 class PasswordResetController extends Controller
 {
+    /** @var UserRepository */
+    private $user_repository;
+
+    /** @var TokenRepository */
+    private $token_repository;
+
+    public function __construct($user_repository, $token_repository)
+    {
+        $this->user_repository = $user_repository;
+        $this->token_repository = $token_repository;
+    }
+
     public function get()
     {
         $view_model['message'] = $_GET['staff']
@@ -19,11 +29,8 @@ class PasswordResetController extends Controller
 
     public function post()
     {
-        $db = new ExtendedPdo('mysql:server=localhost;dbname=app', 'user', null);
-        $user_repo = new UserRepository($db);
-        $user = $user_repo->getUser($_POST['username']);
-        $token_repo = new TokenRepository($db);
-        $token = $token_repo->createToken($user['username']);
+        $user = $this->user_repository->getUser($_POST['username']);
+        $token = $this->token_repository->createToken($user['username']);
         $body = 'Please <a href="/reset_password.php?token=' . $token . '">click here</a> to reset your password.';
         if ($_GET['staff']) {
             $body = "A password reset was requested on your behalf. $body";

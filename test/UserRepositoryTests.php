@@ -3,6 +3,8 @@
 use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/../src/UserRepository.php';
+
 class UserRepositoryTests extends TestCase
 {
     public function testCanGetUserFromDB()

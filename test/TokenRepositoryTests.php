@@ -3,6 +3,8 @@
 use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/../src/TokenRepository.php';
+
 class TokenRepositoryTests extends TestCase
 {
     public function testReturnsToken()

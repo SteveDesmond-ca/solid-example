@@ -9,7 +9,7 @@ class PasswordResetControllerTests extends TestCase
     public function testFormContainsStaffMessage()
     {
         //arrange
-        $controller = new PasswordResetController();
+        $controller = new PasswordResetController(null, null);
         $_GET['staff'] = 1;
 
         //act
@@ -22,7 +22,7 @@ class PasswordResetControllerTests extends TestCase
     public function testFormContainsNonStaffMessage()
     {
         //arrange
-        $controller = new PasswordResetController();
+        $controller = new PasswordResetController(null, null);
         $_GET['staff'] = null;
 
         //act
