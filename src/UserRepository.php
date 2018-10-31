@@ -2,10 +2,16 @@
 
 class UserRepository
 {
+    private $db;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
     public function getUser($username)
     {
-        $db = mysqli_connect('localhost', 'user', null, 'app');
-        $result = mysqli_query($db, "SELECT * FROM users WHERE username='$username'");
+        $result = mysqli_query($this->db, "SELECT * FROM users WHERE username='$username'");
         return $result->fetch_assoc();
     }
 }

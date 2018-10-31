@@ -17,9 +17,10 @@ class PasswordResetController extends Controller
 
     public function post()
     {
-        $user_repo = new UserRepository();
+        $db = mysqli_connect('localhost', 'user', null, 'app');
+        $user_repo = new UserRepository($db);
         $user = $user_repo->getUser($_POST['username']);
-        $token_repo = new TokenRepository();
+        $token_repo = new TokenRepository($db);
         $token = $token_repo->createToken($user['username']);
         $body = 'Please <a href="/reset_password.php?token=' . $token . '">click here</a> to reset your password.';
         if ($_GET['staff']) {
