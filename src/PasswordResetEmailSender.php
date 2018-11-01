@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/PasswordResetMessage.php';
+require_once __DIR__ . '/StaffInitiatedPasswordResetMessage.php';
+
 class PasswordResetEmailSender
 {
     /** @var Swift_Mailer */
@@ -10,29 +13,11 @@ class PasswordResetEmailSender
         $this->mailer = $mailer;
     }
 
-    public function sendMessage($email, $token)
+    public function sendMessage($email, $token, $from_staff)
     {
-        $message = $this->getMailMessage($email, $token);
+        $message = $from_staff
+            ? new StaffInitiatedPasswordResetMessage($email, $token)
+            : new PasswordResetMessage($email, $token);
         $this->mailer->send($message);
-    }
-
-    /**
-     * @param $email
-     * @param $token
-     * @return Swift_Message
-     */
-    public function getMailMessage($email, $token)
-    {
-        $body = 'Please <a href="/reset_password.php?token=' . $token . '">click here</a> to reset your password.';
-        if ($_GET['staff']) {
-            $body = "A password reset was requested on your behalf. $body";
-        }
-
-        $message = new Swift_Message();
-        $message->setFrom('admin@example.com');
-        $message->setTo($email);
-        $message->setSubject('Password Reset');
-        $message->setBody($body);
-        return $message;
     }
 }

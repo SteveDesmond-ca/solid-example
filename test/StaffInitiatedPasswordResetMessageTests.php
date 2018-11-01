@@ -2,24 +2,20 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../src/PasswordResetEmailSender.php';
+require_once __DIR__ . '/../src/StaffInitiatedPasswordResetMessage.php';
 
-class EmailSenderTests extends TestCase
+class StaffInitiatedPasswordResetMessageTests extends TestCase
 {
     public function testMessageIsCorrect()
     {
-        //arrange
-        $mailer = $this->createMock(Swift_Mailer::class);
-        $email_sender = new PasswordResetEmailSender($mailer);
-        $_GET['staff'] = null;
-
-        //act
-        $message = $email_sender->getMailMessage('test@example.com', 'abc123');
+        //arrange/act
+        $message = new StaffInitiatedPasswordResetMessage('test@example.com', 'abc123');
 
         //assert
         $this->assertArrayHasKey('admin@example.com', $message->getFrom());
         $this->assertArrayHasKey('test@example.com', $message->getTo());
         $this->assertEquals('Password Reset', $message->getSubject());
         $this->assertContains('token=abc123', $message->getBody());
+        $this->assertContains('on your behalf', $message->getBody());
     }
 }

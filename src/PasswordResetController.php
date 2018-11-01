@@ -35,7 +35,7 @@ class PasswordResetController extends Controller
     {
         $user = $this->user_repository->getUser($_POST['username']);
         $token = $this->token_repository->createToken($user['username']);
-        $this->email_sender->sendMessage($user['email'], $token);
+        $this->email_sender->sendMessage($user['email'], $token, $_GET['staff']);
         return $this->view('sent.php');
     }
 }
