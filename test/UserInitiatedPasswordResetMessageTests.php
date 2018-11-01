@@ -2,14 +2,14 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../src/PasswordResetMessage.php';
+require_once __DIR__ . '/../src/UserInitiatedPasswordResetMessage.php';
 
-class PasswordResetMessageTests extends TestCase
+class UserInitiatedPasswordResetMessageTests extends TestCase
 {
     public function testMessageIsCorrect()
     {
         //arrange/act
-        $message = new PasswordResetMessage('test@example.com', 'abc123');
+        $message = new UserInitiatedPasswordResetMessage('test@example.com', 'abc123');
 
         //assert
         $this->assertArrayHasKey('admin@example.com', $message->getFrom());

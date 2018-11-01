@@ -7,6 +7,6 @@ class StaffInitiatedPasswordResetMessage extends PasswordResetMessage
     protected function passwordResetBody($token)
     {
         return "A password reset was requested on your behalf. "
-            . parent::passwordResetBody($token);
+            . $this->commonBody($token);
     }
 }

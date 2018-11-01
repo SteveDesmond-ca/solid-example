@@ -1,6 +1,6 @@
 <?php
 
-class PasswordResetMessage extends Swift_Message
+abstract class PasswordResetMessage extends Swift_Message
 {
     public function __construct($email, $token)
     {
@@ -14,7 +14,9 @@ class PasswordResetMessage extends Swift_Message
         $this->setBody($body);
     }
 
-    protected function passwordResetBody($token)
+    protected abstract function passwordResetBody($token);
+
+    protected function commonBody($token)
     {
         return 'Please <a href="/reset_password.php?token=' . $token . '">click here</a> to reset your password.';
     }

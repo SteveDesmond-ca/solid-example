@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/PasswordResetMessage.php';
+require_once __DIR__ . '/UserInitiatedPasswordResetMessage.php';
 require_once __DIR__ . '/StaffInitiatedPasswordResetMessage.php';
 
 class PasswordResetEmailSender
@@ -17,7 +17,7 @@ class PasswordResetEmailSender
     {
         $message = $from_staff
             ? new StaffInitiatedPasswordResetMessage($email, $token)
-            : new PasswordResetMessage($email, $token);
+            : new UserInitiatedPasswordResetMessage($email, $token);
         $this->mailer->send($message);
     }
 }
